@@ -16,7 +16,6 @@ def process_file(file: str):
             quality.validate_phone_number()
             quality.write_processed_csv(file_check.processed_folder, file_check.filename)
             print(f"All checks were successfully ran on file {file_check.filename}")
-            return quality.df
         else:
             print(f"File {file_check.filename} cannot be loaded into pandas DataFrame")
     else:

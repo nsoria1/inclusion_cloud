@@ -14,9 +14,6 @@ class FileHandler:
     def move_invalid_file(self) -> str:
         return shutil.move(self.unprocessed_folder + self.filename, self.invalid_folder)
 
-    def move_valid_file(self) -> str:
-        return shutil.move(self.unprocessed_folder + self.filename, self.processed_folder)
-
     def load_csv(self, location: str) -> pd.DataFrame:
         if location == 'processed':
             filepath = self.processed_folder + self.filename

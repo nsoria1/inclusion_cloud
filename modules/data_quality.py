@@ -24,24 +24,19 @@ class Quality():
             return False
 
     def clean_fields(self) -> bool:
-        try:
-            for c in self.__clean_columns:
-                if c == 'reviews_list':
-                    self.df[c] = self.df[c].apply(clean_reviews_list)
-                    print(f"Cleaned the column list {c}")
-                else:
-                    self.df[c] = self.df[c].apply(clean_special_chars)
-                    print(f"Cleaned column {c}")
-            return True
-        except Exception as e:
-            print(e)
-            return False
-                
+        for c in self.__clean_columns:
+            if c == 'reviews_list':
+                self.df.loc[:, c] = self.df.loc[:, c].apply(clean_reviews_list)
+                print(f"Cleaned the column list {c}")
+            else:
+                self.df.loc[:, c] = self.df.loc[:, c].apply(clean_special_chars)
+                print(f"Cleaned column {c}")
 
     def validate_phone_number(self) -> bool:
         phone_target = ['phone_1', 'phone_2']
+        #return self.df.copy()
         try:
-            self.df[phone_target] = self.df.apply(process_phone, axis=1)
+            self.df.loc[:, phone_target] = self.df.apply(process_phone, axis=1)
             return True
         except Exception as e:
             print(e)
