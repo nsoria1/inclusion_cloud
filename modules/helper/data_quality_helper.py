@@ -3,8 +3,6 @@ import numpy as np
 import re
 import ast
 
-phone_target = ['phone_1', 'phone_2']
-
 def clean_special_chars(series: str) -> str:
     if series is not None:
         series = series.encode("utf8",errors='replace').decode().replace('\n', ' ').replace('\r', '').replace('??????????.', '')
@@ -24,19 +22,17 @@ def clean_reviews_list(data: str) -> str:
     return str(data)
 
 def process_phone(row: pd.Series) -> tuple:
-    empty_tuple = []
-    empty_tuple.append(np.NaN)
-    empty_tuple.append(np.NaN)
+    empty_list = [np.NaN, np.NaN]
     phone = row['phone'].strip()
     if phone in ('na', 'nan') or phone is None:
-        return pd.Series(empty_tuple)
+        return pd.Series(empty_list)
     else:
         split = phone.split('\r\n', 1)
         for idx, s in enumerate(split):
             s = re.sub(r'[^0-9]', '', s).replace('+', '')
             split[idx] = s if len(s) != 0 else np.NaN
     if len(split) == 0:
-        return pd.Series(empty_tuple)
+        return pd.Series(empty_list)
     elif len(split) == 1:
         split.append(np.NaN)
     return pd.Series(split)

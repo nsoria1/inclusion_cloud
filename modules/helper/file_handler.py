@@ -1,4 +1,5 @@
 import os
+import shutil
 import pandas as pd
 
 class FileHandler:
@@ -7,8 +8,14 @@ class FileHandler:
         self.filename = filename
         self.processed_folder = os.getcwd() + '/processed/'
         self.unprocessed_folder = os.getcwd() + '/unprocessed/'
-        self.failed_folder = os.getcwd() + '/invalid/'
+        self.invalid_folder = os.getcwd() + '/invalid/'
         self.extension = filename.rsplit('.', 1)[-1]
+
+    def move_invalid_file(self) -> str:
+        return shutil.move(self.unprocessed_folder + self.filename, self.invalid_folder)
+
+    def move_valid_file(self) -> str:
+        return shutil.move(self.unprocessed_folder + self.filename, self.processed_folder)
 
     def load_csv(self, location: str) -> pd.DataFrame:
         if location == 'processed':
