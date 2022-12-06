@@ -34,7 +34,6 @@ class Quality():
 
     def validate_phone_number(self) -> bool:
         phone_target = ['phone_1', 'phone_2']
-        #return self.df.copy()
         try:
             self.df.loc[:, phone_target] = self.df.apply(process_phone, axis=1)
             return True
